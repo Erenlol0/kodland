@@ -1,0 +1,36 @@
+@Bot.command()
+async def sifre(ctx):
+    karakterler = '!^+%&/()=QWERTYUIOPĞÜASDFGHJKLŞİZXCVBNMÖÇqwertyuıopğüasdfghjklşizxcvbnmöç'
+
+    try:
+        await ctx.author.send("Please enter the length of the password:")
+        def check(message):
+            return message.author == ctx.author and message.channel.type == discord.ChannelType.private
+
+        response = await Bot.wait_for('message', check=check, timeout=60)  
+
+        uzunluk = int(response.content)
+
+        sifre = ""
+        for i in range(uzunluk):
+            sifre += random.choice(karakterler)
+
+        # Kullanıcıya mesajın gönderilip gönderilmediğini belirten kısım
+        await ctx.author.send(f"Generated password: {sifre}")
+        await ctx.send("I've sent the generated password to your DMs!")
+    except discord.Forbidden:
+        await ctx.send("I couldn't send you a DM. Please enable your DMs.")
+    except asyncio.TimeoutError:
+        await ctx.send("You didn't respond in time. Please try the command again.")
+
+
+@Bot.command()
+async def remoji(ctx):
+    emojiler = ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '☺️', '😚', '😙', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '😌', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕', '🤢', '🤮', '🥴', '🤧', '😵', '🤯', '🤠', '🥳', '😎', '🤓', '🧐', '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳', '🥺', '😦', '😧', '😨', '😰', '😥', '😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '😤', '😡', '😠', '🤬', '😈', '👿', '💀', '☠️', '💩', '🤡', '👹', '👺', '👻', '👽', '👾', '🤖', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
+
+    selected_emoji = random.choice(emojiler)
+    await ctx.send(f"Generated emoji: {selected_emoji}")
+
+@Bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
